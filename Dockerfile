@@ -7,14 +7,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["habitica-backend/habitica-backend.csproj", "habitica-backend/"]
-RUN dotnet restore "habitica-backend/habitica-backend.csproj"
+COPY ["habitica-backend/API.csproj", "habitica-backend/"]
+RUN dotnet restore "habitica-backend/API.csproj"
 COPY . .
 WORKDIR "/src/habitica-backend"
-RUN dotnet build "habitica-backend.csproj" -c Release -o /app/build
+RUN dotnet build "API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "habitica-backend.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
